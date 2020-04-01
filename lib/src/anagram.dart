@@ -31,7 +31,30 @@ class Anagram {
   String dictionaryPath = 'default';
 
   /// Solve the anagram
+  /// Returns a list of anagrams or an empty list if none were found.
   List<String> solve(String word) {
+    _parameters();
+    _log('Solving for $word');
     return <String>[];
+  }
+
+  /// Verbose logging
+  void _log(String entry) {
+    if (verbose) {
+      print('Anagram - $entry');
+    }
+  }
+
+  /// Print the parameters if verbose
+  void _parameters() {
+    if (verbose) {
+      print('Anagram - parameters are :-');
+      print('   Ignore Case Initial $ignoreCaseInitial');
+      print('   Ignore Case All $ignoreCaseAll');
+      print('   Maximum words $maxWords');
+      print('   Ignore Punctuation $ignorePunctuation');
+      print('   Dictionary Path $dictionaryPath');
+      print('');
+    }
   }
 }
