@@ -122,6 +122,7 @@ int main(List<String> args) {
   anagram.initialise();
 
   // Solve the anagram
+  print('');
   print('Getting anagrams of the word $inputWord');
   print('');
   var words = anagram.solve(inputWord);

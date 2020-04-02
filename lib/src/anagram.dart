@@ -11,9 +11,8 @@ part of anagram;
 ///	Structure of a cell used to hold a word in the list which has the same
 ///	letters as a word we have already found. Idem is latin for "the same".
 ///
-class _idem {
+class _idem extends LinkedListEntry<_idem> {
   String word; // The word exactly as read from the dict
-  _idem link; // Next in the list of similar words */
 }
 
 ///
@@ -21,17 +20,11 @@ class _idem {
 ///	of a possible anagram.
 ///
 class _cell extends LinkedListEntry<_cell> {
-  _cell link; // To bind the linked list together
   String word; // At last! The word itself
   int wordlen; //length of the word
 
-// Sub-word list reduces problem for children. These pointers are
-// the heads of a stack of doubly linked lists (!)
-  _cell flink; // Forward links for doubly linked list
-  _cell rlink; // Reverse links for doubly linked list
-
-// First element in linked list of words which contain the same letters
-  // (including the original) exactly as they came out of the dict
+  // First element in linked list of words which contain the same letters
+  // (including the original) exactly as they came out of the dictionary
   _idem idem;
 }
 
@@ -41,6 +34,8 @@ class Anagram {
   Anagram();
 
   static int MaxWords = 64;
+  static String DefaultDictionaryPath = 'default';
+  static String DictionaryPathPart = 'words';
 
   /// Verbose.
   bool verbose = false;
@@ -58,16 +53,19 @@ class Anagram {
   bool ignorePunctuation = false;
 
   /// Dictionary path
-  String dictionaryPath = 'default';
+  String dictionaryPath = DefaultDictionaryPath;
+
+  List<String> _dictionaryWordList;
+
+  _cell _wordList;
 
   bool _initialised = false;
 
   // Number of time each character occurs in the key.
   // Must be initialised to 0s.
-  // Set by buildwordlist, Used by findanags.
   final _freq = List<int>(256);
 
-  // Number of letters in key, == sum(freq[*])
+  // Number of letters in key.
   int _nletters;
 
   // The cells for the words
@@ -87,6 +85,8 @@ class Anagram {
   void initialise() {
     _freq.fillRange(0, _freq.length - 1, 0);
     _purify = ignoreCaseAll || ignoreCaseInitial || ignorePunctuation;
+    _parameters();
+    _readWordList();
     _initialised = true;
   }
 
@@ -97,7 +97,7 @@ class Anagram {
       _log('Please initialise the library');
       return <String>[];
     }
-    _parameters();
+    _initialiseDataStructures(word);
     _log('Solving for $word');
     return <String>[];
   }
@@ -123,6 +123,30 @@ class Anagram {
     }
   }
 
+  /// Read the words from the words file
+  void _readWordList() {
+    if (dictionaryPath == DefaultDictionaryPath) {
+      dictionaryPath = join(current, DictionaryPathPart, DictionaryPathPart);
+    }
+    _log('Real dictionary path is $dictionaryPath');
+    var myFile = File(dictionaryPath);
+    _dictionaryWordList = myFile.readAsLinesSync();
+    _log('${_dictionaryWordList.length} words read');
+  }
+
+  void _initialiseDataStructures(String word) {
+    for (var i = 0; i < word.length; i++) {
+      _freq[word.codeUnitAt(i)]++;
+    }
+    _nletters = word.length;
+    _log('$_nletters letters in the key');
+    _maxgen = maxWords;
+    _wordList = _buildwordlist();
+  }
+
+  /// Read words in from the dictionary word list and put
+  /// candidates into a linked list.
+  /// Return the head of the list.
   _cell _buildwordlist() {}
   _cell _sort() {}
   _cell _forgelinks() {}
