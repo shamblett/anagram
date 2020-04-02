@@ -74,6 +74,8 @@ int main(List<String> args) {
 
   // Help
   if (results['help']) {
+    print('Usage: anagram -v -m# word');
+    print('');
     print(argParser.usage);
     return 0;
   }
@@ -101,11 +103,13 @@ int main(List<String> args) {
   if (results.rest.isNotEmpty) {
     inputWord = results.rest[0];
   } else {
+    print('Usage: anagram -v -m# word');
+    print('');
     print(argParser.usage);
     return 0;
   }
 
-  // Solve the anagram
+  // Initialise
   final anagram = Anagram();
   anagram.verbose = verbose;
   anagram.ignoreCaseAll = ignoreCaseAll;
@@ -115,7 +119,9 @@ int main(List<String> args) {
   if (dictionaryPath != null) {
     anagram.dictionaryPath = dictionaryPath;
   }
+  anagram.initialise();
 
+  // Solve the anagram
   print('Getting anagrams of the word $inputWord');
   print('');
   var words = anagram.solve(inputWord);

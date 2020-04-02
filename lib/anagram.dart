@@ -7,6 +7,7 @@
 
 library anagram;
 
+import 'dart:collection';
 import 'package:path/path.dart';
 
 part 'src/anagram.dart';
