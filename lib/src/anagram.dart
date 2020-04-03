@@ -75,16 +75,12 @@ class Anagram {
   // Number of words in current list
   int _nwords;
 
-  // Some munging has to be done on the dict's words
-  bool _purify = false;
-
   // Highest number of generations of findanag possible
   int _maxgen = 0;
 
   /// Initialise
   void initialise() {
     _freq.fillRange(0, _freq.length - 1, 0);
-    _purify = ignoreCaseAll || ignoreCaseInitial || ignorePunctuation;
     _parameters();
     _readWordList();
     _initialised = true;
@@ -117,7 +113,6 @@ class Anagram {
       print('   Ignore Case All $ignoreCaseAll');
       print('   Maximum words $maxWords');
       print('   Ignore Punctuation $ignorePunctuation');
-      print('   Purify $_purify');
       print('   Dictionary Path $dictionaryPath');
       print('');
     }
@@ -141,13 +136,66 @@ class Anagram {
     _nletters = word.length;
     _log('$_nletters letters in the key');
     _maxgen = maxWords;
-    _wordList = _buildwordlist();
+    _wordList = _buildWordList();
   }
 
   /// Read words in from the dictionary word list and put
   /// candidates into a linked list.
   /// Return the head of the list.
-  _cell _buildwordlist() {}
+  _cell _buildWordList() {
+    var head = _cell();
+    var candidates = <String>[];
+    for (var word in _dictionaryWordList) {
+      var realWord = word;
+      // Ignore Initial letter case
+      if (ignoreCaseInitial) {
+        if (word[0] == word[0].toUpperCase()) {
+          realWord = realWord.replaceFirst(word[0], word[0].toLowerCase(), 0);
+        }
+      }
+      // Ignore all case
+      if (ignoreCaseAll) {
+        realWord = realWord.toLowerCase();
+      }
+      // Ignore punctuation
+      if (ignorePunctuation) {
+        realWord = realWord.replaceAll(r'/[.,\/#!$%\^&\*;:{}=\-_`~()]', '');
+      }
+      // Throw out all one-letter words except for a, i, o.
+      if (realWord.length == 1) {
+        if (!(realWord.startsWith('a') ||
+            realWord.startsWith('i') ||
+            realWord.startsWith('o'))) {
+          continue;
+        }
+      }
+      // Reject the word if it contains any character which
+      // wasn't in the key.
+      for (var codeUnit in realWord.codeUnits) {
+        if (_freq[codeUnit] == 0) {
+          continue;
+        }
+      }
+      // This word merits further inspection. See if it contains
+      //	no more of any letter than the original.
+      var freq = List.from(_freq, growable: false);
+      var rejected = false;
+      for (var i = 0; i < realWord.length; i++) {
+        if (freq[realWord.codeUnitAt(i)] <= 0) {
+          rejected = true;
+        }
+        freq[realWord.codeUnitAt(i)]--;
+      }
+      if (rejected) {
+        continue;
+      }
+      candidates.add(realWord);
+    }
+    _log('There are ${candidates.length} candidates');
+    //candidates.forEach(_log);
+    return head;
+  }
+
   _cell _sort() {}
   _cell _forgelinks() {}
 }
