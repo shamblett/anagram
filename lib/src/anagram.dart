@@ -7,6 +7,9 @@
 
 part of anagram;
 
+/// Maximum nuber of generations possible
+const int maxGen = 10;
+
 ///
 ///	Structure of a cell used to hold a word in the list which has the same
 ///	letters as a word we have already found. Idem is latin for "the same".
@@ -29,6 +32,11 @@ class _Cell extends LinkedListEntry<_Cell> {
   // First element in linked list of words which contain the same letters
   // (including the original) exactly as they came out of the dictionary
   LinkedList<_Idem> idem = LinkedList<_Idem>();
+
+  // Sub-word list reduces problem for children. These are
+  // the heads of a stack of doubly linked lists.
+  List<_Cell> fLink = List<_Cell>(maxGen); // Forward
+  List<_Cell> rLink = List<_Cell>(maxGen); // Reverse
 
   @override
   String toString() =>
@@ -73,17 +81,14 @@ class Anagram {
   final _freq = List<int>(256);
 
   // Number of letters in key.
-  int _nletters;
+  int _nLetters;
 
   // The cells for the words
-  // making up the anagram under construction
-  final _anagword = List<_Cell>(MaxWords);
+  // making up the anagram under construction.
+  final _anagramWord = List<_Cell>(MaxWords);
 
-  // Number of words in current list
-  int _nWords;
-
-  // Highest number of generations of findanag possible
-  int _maxgen = 0;
+  // Highest number of generations possible.
+  int _maxGen = 0;
 
   /// Initialise
   void initialise() {
@@ -104,17 +109,19 @@ class Anagram {
       return <String>[];
     }
     _initialiseDataStructures(word);
-    _log('Solving for $word');
+    _log('Solving for $word, building word list');
     // Build the candidate word list
     _wordList = _buildWordList();
-    _nWords = _wordList.length;
     if (_wordList.isEmpty) {
       print('No suitable words.');
       return <String>[];
     }
     // Sort it
+    _log('Sorting');
     _wordList = _sort();
-
+    // Search for anagrams
+    _log('Searching for anagrams...');
+    _findAnagrams(0, _wordList.last, _nLetters);
     return <String>[];
   }
 
@@ -153,9 +160,10 @@ class Anagram {
     for (var i = 0; i < word.length; i++) {
       _freq[word.codeUnitAt(i)]++;
     }
-    _nletters = word.length;
-    _log('$_nletters letters in the key');
-    _maxgen = maxWords;
+    _nLetters = word.length;
+    _log('$_nLetters letters in the key');
+    _maxGen = maxWords;
+    _wordList = LinkedList<_Cell>();
   }
 
   /// Read words in from the dictionary word list and put
@@ -272,7 +280,82 @@ class Anagram {
     return head;
   }
 
-  _Cell _forgelinks() {}
+  ///
+  /// Print out all anagrams which can be made from the word list word
+  ///	out of the letters left in freq[].
+  /// (cell)->[fr]link[generation] is the word list we are to scan.
+  /// Scan from the tail back to the head; (head->rlink[gen]==NULL)
+  void _findAnagrams(int generation, _Cell wordLt, int nLeft) {
+    _Cell myHead;
+    _Cell myTail;
+    for (var cell = wordLt; cell != null; cell = cell.previous) {
+      //	This looks remarkably like bits of buildwordlist.
+      //
+      //	First a quick rudimentary check whether we have already
+      //	run out of any of the letters required.
+      var nextWord = false;
+      for (var i = 0; i < cell.word.length; i++) {
+        if (_freq[cell.word.codeUnitAt(i)] == 0) {
+          nextWord = true;
+          break;
+        }
+      }
+      if (nextWord) {
+        continue;
+      }
+      var freq = List<int>.from(_freq);
+      //	Now do a more careful counting check.
+      //
+      var nl = nLeft;
+      nextWord = false;
+      for (var i = 0; i < cell.word.length; i++) {
+        if (freq[cell.word.codeUnitAt(i)] == 0) {
+          nextWord = true;
+          break;
+        } else {
+          freq[cell.word.codeUnitAt(i)]--;
+          nl--;
+        }
+      }
+      if (nextWord) {
+        continue;
+      }
+      //	Yep, there were the letters left to make the word.
+      //	Are we done yet?
+      switch (nl) {
+        case 0: // Bingo
+          // Insert the final word.
+          _anagramWord[generation] = cell;
+          // Print the phrase.
+          _print(0, generation);
+          break;
+        default:
+          if (generation < _maxGen - 1) {
+            // Record the word and find something to follow it
+            //
+            // Add it to the list of words that were ok for
+            // us; those words which we rejected are
+            // certainly not worth our children's attention.
+            // Constructed like a lifo stack.
+
+            cell.fLink[generation + 1] = myHead;
+            if (myHead != null) {
+              myHead.rLink[generation + 1] = cell;
+            } else // this is the first item on the list
+            {
+              myTail = cell;
+              myHead = cell;
+              myHead.rLink[generation + 1] = null;
+
+              // Record where we are for printing.
+              _anagramWord[generation] = cell;
+              // try all combinations of words on this stem.
+              _findAnagrams(generation + 1, myTail, nl);
+            }
+          }
+      }
+    }
+  }
 
   // Do the two words contain the same letters?
   // It must be guaranteed by the caller that they are the same length.
@@ -289,4 +372,16 @@ class Anagram {
     }
     return true;
   }
+
+  ///
+  ///	Used to print out successful anagrams.
+  ///	Because of Optimisation #n, we have to churn out every combination
+  ///	of the words in anagword[0..gen]. Best done recursively.
+  ///
+  ///	Print anagram phrases indicated by anagword[0..gen].
+  ///	There are <gen> invocations of this procedure active above us.
+  ///	The words they are contemplating are available through
+  ///	idlist[0..gen-1]. Print the parents' words from there followed by
+  ///	every combination of the words dangling from anagword[gen..maxgen].
+  void _print(int gen, int higen) {}
 }
