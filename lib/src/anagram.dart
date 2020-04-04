@@ -90,6 +90,9 @@ class Anagram {
     _freq.fillRange(0, _freq.length - 1, 0);
     _parameters();
     _readWordList();
+    if (_wordList.isEmpty) {
+      print('Dictionary is empty');
+    }
     _initialised = true;
   }
 
@@ -102,12 +105,16 @@ class Anagram {
     }
     _initialiseDataStructures(word);
     _log('Solving for $word');
+    // Build the candidate word list
     _wordList = _buildWordList();
     _nWords = _wordList.length;
     if (_wordList.isEmpty) {
-      print('Empty dictionary or no suitable words.');
+      print('No suitable words.');
       return <String>[];
     }
+    // Sort it
+    _wordList = _sort();
+
     return <String>[];
   }
 
@@ -253,7 +260,18 @@ class Anagram {
     return head;
   }
 
-  _Cell _sort() {}
+  ///
+  /// Sort the _[wordList] by word length so that the longest is at the head.
+  /// Return the new head of the list.
+  LinkedList<_Cell> _sort() {
+    var head = LinkedList<_Cell>();
+    var cells = List<_Cell>.from(_wordList.toList());
+    _wordList.clear();
+    cells.sort((a, b) => b.wordLen > a.wordLen ? -1 : 1);
+    cells.forEach(head.addFirst);
+    return head;
+  }
+
   _Cell _forgelinks() {}
 
   // Do the two words contain the same letters?
