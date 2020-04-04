@@ -21,11 +21,11 @@ class _idem extends LinkedListEntry<_idem> {
 ///
 class _cell extends LinkedListEntry<_cell> {
   String word; // At last! The word itself
-  int wordlen; //length of the word
+  int wordLen; //length of the word
 
   // First element in linked list of words which contain the same letters
   // (including the original) exactly as they came out of the dictionary
-  _idem idem;
+  LinkedList<_idem> idem = LinkedList<_idem>();
 }
 
 /// The main anagram class
@@ -57,7 +57,7 @@ class Anagram {
 
   List<String> _dictionaryWordList;
 
-  _cell _wordList;
+  LinkedList<_cell> _wordList = LinkedList<_cell>();
 
   bool _initialised = false;
 
@@ -95,6 +95,11 @@ class Anagram {
     }
     _initialiseDataStructures(word);
     _log('Solving for $word');
+    _buildWordList();
+    if (_wordList.isEmpty) {
+      print('Empty dictionary or no suitable words.');
+      return <String>[];
+    }
     return <String>[];
   }
 
@@ -136,14 +141,12 @@ class Anagram {
     _nletters = word.length;
     _log('$_nletters letters in the key');
     _maxgen = maxWords;
-    _wordList = _buildWordList();
   }
 
   /// Read words in from the dictionary word list and put
   /// candidates into a linked list.
   /// Return the head of the list.
-  _cell _buildWordList() {
-    var head = _cell();
+  void _buildWordList() {
     var candidates = <String>[];
     for (var word in _dictionaryWordList) {
       var realWord = word;
@@ -190,12 +193,60 @@ class Anagram {
         continue;
       }
       candidates.add(realWord);
+
+      _log('There are ${candidates.length} candidates');
+
+      // See if this word contains the same letters as a previous one.
+      // If so, tack it on to that word's idem list.
+
+      // Scan down the word list looking for a match.
+      var len = realWord.length;
+      while (_wordList.iterator.moveNext()) {
+        var cell = _wordList.iterator.current;
+        if (len == cell.wordLen && _sameLetters(realWord, cell.word)) {
+          var idem = _idem();
+          idem.word = realWord;
+          cell.idem.add(idem);
+        }
+      }
+
+      //	The word passed all the tests.
+      //	Construct a new cell and attach it to the list.
+
+      // Get a new cell
+      var cell = _cell();
+      cell.word = realWord;
+      cell.wordLen = realWord.length;
+
+      // If [realWord] differs from pure word, store it separately.
+      var idem = _idem();
+      if (realWord == word) {
+        idem.word = cell.word;
+      } else {
+        idem.word = realWord;
+      }
+      cell.idem.add(idem);
+      _wordList.add(cell);
+      _log('${_wordList.length} suitable words found');
     }
-    _log('There are ${candidates.length} candidates');
-    //candidates.forEach(_log);
-    return head;
   }
 
   _cell _sort() {}
   _cell _forgelinks() {}
+
+  // Do the two words contain the same letters?
+  // It must be guaranteed by the caller that they are the same length.
+  bool _sameLetters(String word1, String word2) {
+    var slFreq = List<int>(256);
+    slFreq.fillRange(0, 0, 0);
+    for (var i = 0; i < word1.length; i++) {
+      slFreq[word1.codeUnitAt(i)]++;
+    }
+    for (var i = 0; i < word2.length; i++) {
+      if (slFreq[word2.codeUnitAt(i)]-- < 0) {
+        return false;
+      }
+    }
+    return true;
+  }
 }
