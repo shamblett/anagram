@@ -5,6 +5,6 @@ Anagram is a standalone utility using its own inbuilt word list(from linux words
 
 It is intended for simple anagram finding for tasks such as crossword solving etc.
 
-Please read the changelog for details related to specific versions and he example for usage details.
+Please read the changelog for details related to specific versions and the example for usage details.
 
 
