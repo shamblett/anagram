@@ -3,6 +3,8 @@ A simple anagram solving utility library for Dart based on the original anagram 
 
 Anagram is a standalone utility using its own inbuilt word list(from linux words) and as such does not depend on any web services.
 
-Please read the changelog for details related to specific versions.
+It is intended for simple anagram finding for tasks such as crossword solving etc.
+
+Please read the changelog for details related to specific versions and he example for usage details.
 
 

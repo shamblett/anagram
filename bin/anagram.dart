@@ -101,7 +101,7 @@ int main(List<String> args) {
   }
 
   if (results.rest.isNotEmpty) {
-    inputWord = results.rest[0];
+    inputWord = results.rest.join('');
   } else {
     print('Usage: anagram -v -m# word');
     print('');
@@ -123,11 +123,15 @@ int main(List<String> args) {
 
   // Solve the anagram
   print('');
-  print('Getting anagrams of the word $inputWord');
-  print('');
+  print('Getting anagrams of the word "${results.rest.join(" ")}"');
+  if ( verbose) {
+    print('');
+  }
   var words = anagram.solve(inputWord);
   if (words.isNotEmpty) {
-    print('The anagrams of $inputWord are :-');
+    print('');
+    print('The anagrams of "${results.rest.join(" ")}" are :-');
+    print('');
     print('${words.join(',')}');
   } else {
     print('');

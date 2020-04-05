@@ -76,6 +76,8 @@ class Anagram {
 
   bool _initialised = false;
 
+  final _anagramsFound = <String>[];
+
   // Number of time each character occurs in the key.
   // Must be initialised to 0s.
   final _freq = List<int>(256);
@@ -92,11 +94,11 @@ class Anagram {
 
   /// Initialise
   void initialise() {
-    _freq.fillRange(0, _freq.length - 1, 0);
     _parameters();
     _readWordList();
-    if (_wordList.isEmpty) {
+    if (_dictionaryWordList.isEmpty) {
       print('Dictionary is empty');
+      return;
     }
     _initialised = true;
   }
@@ -122,7 +124,7 @@ class Anagram {
     // Search for anagrams
     _log('Searching for anagrams...');
     _findAnagrams(0, _wordList.last, _nLetters);
-    return <String>[];
+    return _anagramsFound.toSet().toList();
   }
 
   /// Verbose logging
@@ -157,13 +159,16 @@ class Anagram {
   }
 
   void _initialiseDataStructures(String word) {
+    _freq.fillRange(0, _freq.length - 1, 0);
     for (var i = 0; i < word.length; i++) {
       _freq[word.codeUnitAt(i)]++;
     }
     _nLetters = word.length;
     _log('$_nLetters letters in the key');
     _maxGen = maxWords;
-    _wordList = LinkedList<_Cell>();
+    _wordList.clear();
+    _anagramWord.fillRange(0, _anagramWord.length - 1, _Cell());
+    _anagramsFound.clear();
   }
 
   /// Read words in from the dictionary word list and put
@@ -281,7 +286,7 @@ class Anagram {
   }
 
   ///
-  /// Print out all anagrams which can be made from the word list word
+  /// Find all anagrams which can be made from the word list word
   ///	out of the letters left in freq[].
   /// (cell)->[fr]link[generation] is the word list we are to scan.
   /// Scan from the tail back to the head; (head->rlink[gen]==NULL)
@@ -326,8 +331,8 @@ class Anagram {
         case 0: // Bingo
           // Insert the final word.
           _anagramWord[generation] = cell;
-          // Print the phrase.
-          _print(0, generation);
+          // Select the phrase.
+          _select(0, generation);
           break;
         default:
           if (generation < _maxGen - 1) {
@@ -374,14 +379,31 @@ class Anagram {
   }
 
   ///
-  ///	Used to print out successful anagrams.
+  ///	Used to select successful anagrams.
   ///	Because of Optimisation #n, we have to churn out every combination
   ///	of the words in anagword[0..gen]. Best done recursively.
   ///
-  ///	Print anagram phrases indicated by anagword[0..gen].
+  ///	Select anagram phrases indicated by anagword[0..gen].
   ///	There are <gen> invocations of this procedure active above us.
   ///	The words they are contemplating are available through
-  ///	idlist[0..gen-1]. Print the parents' words from there followed by
+  ///	idlist[0..gen-1]. Select the parents' words from there followed by
   ///	every combination of the words dangling from anagword[gen..maxgen].
-  void _print(int gen, int higen) {}
+  void _select(int gen, int hiGen) {
+    if (gen == hiGen) {
+      // No further recursion; just select.
+      // For each word in idemlist[gen], select the stem and it.
+      var it = _anagramWord[hiGen].idem.iterator;
+      while (it.moveNext()) {
+        var idem = it.current;
+        _anagramsFound.add(idem.word);
+      }
+    } else {
+      var it = _anagramWord[hiGen].idem.iterator;
+      while (it.moveNext()) {
+        var idem = it.current;
+        _anagramsFound.add(idem.word);
+        _select(gen + 1, hiGen);
+      }
+    }
+  }
 }
