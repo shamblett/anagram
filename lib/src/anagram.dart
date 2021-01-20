@@ -35,8 +35,8 @@ class _Cell extends LinkedListEntry<_Cell> {
 
   // Sub-word list reduces problem for children. These are
   // the heads of a stack of doubly linked lists.
-  List<_Cell?> fLink = List<_Cell?>(maxGen); // Forward
-  List<_Cell?> rLink = List<_Cell?>(maxGen); // Reverse
+  List<_Cell?> fLink = List<_Cell?>.filled(maxGen, null); // Forward
+  List<_Cell?> rLink = List<_Cell?>.filled(maxGen, null); // Reverse
 
   @override
   String toString() =>
@@ -80,14 +80,14 @@ class Anagram {
 
   // Number of time each character occurs in the key.
   // Must be initialised to 0s.
-  final _freq = List<int?>(256);
+  final _freq = List<int>.filled(256, 0);
 
   // Number of letters in key.
   int? _nLetters;
 
   // The cells for the words
   // making up the anagram under construction.
-  final _anagramWord = List<_Cell?>(MaxWords);
+  final _anagramWord = List<_Cell?>.filled(MaxWords, _Cell());
 
   // Highest number of generations possible.
   int _maxGen = 0;
@@ -159,7 +159,6 @@ class Anagram {
   }
 
   void _initialiseDataStructures(String word) {
-    _freq.fillRange(0, _freq.length - 1, 0);
     for (var i = 0; i < word.length; i++) {
       _freq[word.codeUnitAt(i)]++;
     }
@@ -319,7 +318,7 @@ class Anagram {
           break;
         } else {
           freq[cell.word!.codeUnitAt(i)]--;
-          nl--;
+          nl != null ? nl-- : null;
         }
       }
       if (nextWord) {
@@ -365,13 +364,13 @@ class Anagram {
   // Do the two words contain the same letters?
   // It must be guaranteed by the caller that they are the same length.
   bool _sameLetters(String word1, String word2) {
-    var slFreq = List<int?>(256);
+    var slFreq = List<int>.filled(256, 0);
     slFreq.fillRange(0, slFreq.length - 1, 0);
     for (var i = 0; i < word1.length; i++) {
       slFreq[word1.codeUnitAt(i)]++;
     }
     for (var i = 0; i < word2.length; i++) {
-      if (slFreq[word2.codeUnitAt(i)]--! < 0) {
+      if (slFreq[word2.codeUnitAt(i)]-- < 0) {
         return false;
       }
     }
