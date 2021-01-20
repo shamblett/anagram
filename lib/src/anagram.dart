@@ -15,7 +15,7 @@ const int maxGen = 10;
 ///	letters as a word we have already found. Idem is latin for "the same".
 ///
 class _Idem extends LinkedListEntry<_Idem> {
-  String word; // The word exactly as read from the dict
+  String? word; // The word exactly as read from the dict
 
   @override
   String toString() => 'Idem - word = $word';
@@ -26,8 +26,8 @@ class _Idem extends LinkedListEntry<_Idem> {
 ///	of a possible anagram.
 ///
 class _Cell extends LinkedListEntry<_Cell> {
-  String word; // At last! The word itself
-  int wordLen; //length of the word
+  String? word; // At last! The word itself
+  int? wordLen; //length of the word
 
   // First element in linked list of words which contain the same letters
   // (including the original) exactly as they came out of the dictionary
@@ -35,8 +35,8 @@ class _Cell extends LinkedListEntry<_Cell> {
 
   // Sub-word list reduces problem for children. These are
   // the heads of a stack of doubly linked lists.
-  List<_Cell> fLink = List<_Cell>(maxGen); // Forward
-  List<_Cell> rLink = List<_Cell>(maxGen); // Reverse
+  List<_Cell?> fLink = List<_Cell?>(maxGen); // Forward
+  List<_Cell?> rLink = List<_Cell?>(maxGen); // Reverse
 
   @override
   String toString() =>
@@ -68,26 +68,26 @@ class Anagram {
   bool ignorePunctuation = false;
 
   /// Dictionary path
-  String dictionaryPath = DefaultDictionaryPath;
+  String? dictionaryPath = DefaultDictionaryPath;
 
-  List<String> _dictionaryWordList;
+  late List<String> _dictionaryWordList;
 
   LinkedList<_Cell> _wordList = LinkedList<_Cell>();
 
   bool _initialised = false;
 
-  final _anagramsFound = <String>[];
+  final _anagramsFound = <String?>[];
 
   // Number of time each character occurs in the key.
   // Must be initialised to 0s.
-  final _freq = List<int>(256);
+  final _freq = List<int?>(256);
 
   // Number of letters in key.
-  int _nLetters;
+  int? _nLetters;
 
   // The cells for the words
   // making up the anagram under construction.
-  final _anagramWord = List<_Cell>(MaxWords);
+  final _anagramWord = List<_Cell?>(MaxWords);
 
   // Highest number of generations possible.
   int _maxGen = 0;
@@ -105,7 +105,7 @@ class Anagram {
 
   /// Solve the anagram
   /// Returns a list of anagrams or an empty list if none were found.
-  List<String> solve(String word) {
+  List<String?> solve(String word) {
     if (!_initialised) {
       _log('Please initialise the library');
       return <String>[];
@@ -153,7 +153,7 @@ class Anagram {
       dictionaryPath = join(current, DictionaryPathPart, DictionaryPathPart);
     }
     _log('Real dictionary path is $dictionaryPath');
-    var myFile = File(dictionaryPath);
+    var myFile = File(dictionaryPath!);
     _dictionaryWordList = myFile.readAsLinesSync();
     _log('${_dictionaryWordList.length} words read');
   }
@@ -239,7 +239,7 @@ class Anagram {
       var seen = false;
       while (it.moveNext()) {
         var cell = it.current;
-        if (len == cell.wordLen && _sameLetters(realWord, cell.word)) {
+        if (len == cell.wordLen && _sameLetters(realWord, cell.word!)) {
           var idem = _Idem();
           idem.word = realWord;
           cell.idem.add(idem);
@@ -280,7 +280,7 @@ class Anagram {
     var head = LinkedList<_Cell>();
     var cells = List<_Cell>.from(_wordList.toList());
     _wordList.clear();
-    cells.sort((a, b) => b.wordLen > a.wordLen ? -1 : 1);
+    cells.sort((a, b) => b.wordLen! > a.wordLen! ? -1 : 1);
     cells.forEach(head.addFirst);
     return head;
   }
@@ -290,17 +290,17 @@ class Anagram {
   ///	out of the letters left in freq[].
   /// (cell)->[fr]link[generation] is the word list we are to scan.
   /// Scan from the tail back to the head; (head->rlink[gen]==NULL)
-  void _findAnagrams(int generation, _Cell wordLt, int nLeft) {
-    _Cell myHead;
+  void _findAnagrams(int generation, _Cell wordLt, int? nLeft) {
+    _Cell? myHead;
     _Cell myTail;
-    for (var cell = wordLt; cell != null; cell = cell.previous) {
+    for (_Cell? cell = wordLt; cell != null; cell = cell.previous) {
       //	This looks remarkably like bits of buildwordlist.
       //
       //	First a quick rudimentary check whether we have already
       //	run out of any of the letters required.
       var nextWord = false;
-      for (var i = 0; i < cell.word.length; i++) {
-        if (_freq[cell.word.codeUnitAt(i)] == 0) {
+      for (var i = 0; i < cell.word!.length; i++) {
+        if (_freq[cell.word!.codeUnitAt(i)] == 0) {
           nextWord = true;
           break;
         }
@@ -313,12 +313,12 @@ class Anagram {
       //
       var nl = nLeft;
       nextWord = false;
-      for (var i = 0; i < cell.word.length; i++) {
-        if (freq[cell.word.codeUnitAt(i)] == 0) {
+      for (var i = 0; i < cell.word!.length; i++) {
+        if (freq[cell.word!.codeUnitAt(i)] == 0) {
           nextWord = true;
           break;
         } else {
-          freq[cell.word.codeUnitAt(i)]--;
+          freq[cell.word!.codeUnitAt(i)]--;
           nl--;
         }
       }
@@ -365,13 +365,13 @@ class Anagram {
   // Do the two words contain the same letters?
   // It must be guaranteed by the caller that they are the same length.
   bool _sameLetters(String word1, String word2) {
-    var slFreq = List<int>(256);
+    var slFreq = List<int?>(256);
     slFreq.fillRange(0, slFreq.length - 1, 0);
     for (var i = 0; i < word1.length; i++) {
       slFreq[word1.codeUnitAt(i)]++;
     }
     for (var i = 0; i < word2.length; i++) {
-      if (slFreq[word2.codeUnitAt(i)]-- < 0) {
+      if (slFreq[word2.codeUnitAt(i)]--! < 0) {
         return false;
       }
     }
@@ -392,13 +392,13 @@ class Anagram {
     if (gen == hiGen) {
       // No further recursion; just select.
       // For each word in idemlist[gen], select the stem and it.
-      var it = _anagramWord[hiGen].idem.iterator;
+      var it = _anagramWord[hiGen]!.idem.iterator;
       while (it.moveNext()) {
         var idem = it.current;
         _anagramsFound.add(idem.word);
       }
     } else {
-      var it = _anagramWord[hiGen].idem.iterator;
+      var it = _anagramWord[hiGen]!.idem.iterator;
       while (it.moveNext()) {
         var idem = it.current;
         _anagramsFound.add(idem.word);
