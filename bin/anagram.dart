@@ -36,8 +36,8 @@ int main(List<String> args) {
   argParser.addOption('maxAnagramWords',
       abbr: 'm',
       defaultsTo: '1',
-      help: 'Maximum number of words in anagrams', callback: (String param) {
-    final tmp = int.tryParse(param);
+      help: 'Maximum number of words in anagrams', callback: (String? param) {
+    final tmp = int.tryParse(param!);
     if (tmp != null && tmp >= 1) {
       maxWords = tmp;
     } else {
@@ -62,7 +62,7 @@ int main(List<String> args) {
     'dictionary',
     abbr: 'd',
     help: 'The path of the dictionary word list',
-    callback: (String param) => dictionaryPath = param,
+    callback: (String? param) => dictionaryPath = param,
   );
 
   try {
@@ -124,7 +124,7 @@ int main(List<String> args) {
   // Solve the anagram
   print('');
   print('Getting anagrams of the word "${results.rest.join(" ")}"');
-  if ( verbose) {
+  if (verbose) {
     print('');
   }
   var words = anagram.solve(inputWord);
