@@ -1,4 +1,7 @@
 # 2.1.1
+2.1.2 - fix package path
+
+# 2.1.1
 2.1.1 - fix package path
 
 # 2.1.0
