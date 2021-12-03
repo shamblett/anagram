@@ -150,7 +150,8 @@ class Anagram {
   /// Read the words from the words file
   void _readWordList() {
     if (dictionaryPath == DefaultDictionaryPath) {
-      dictionaryPath = join(current, DictionaryPathPart, DictionaryPathPart);
+      dictionaryPath = join(
+          Platform.script.toFilePath(), DictionaryPathPart, DictionaryPathPart);
     }
     _log('Real dictionary path is $dictionaryPath');
     var myFile = File(dictionaryPath!);
