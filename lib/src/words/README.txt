@@ -1,0 +1,1 @@
+Default word list taken from the linux word list found at /usr/share/dict/words from the words.rpm.

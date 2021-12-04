@@ -1,4 +1,7 @@
-# 2.1.1
+#2.1.3 
+internalize the word list
+
+# 2.1.2
 2.1.2 - fix package path
 
 # 2.1.1

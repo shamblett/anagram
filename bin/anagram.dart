@@ -25,7 +25,6 @@ int main(List<String> args) {
   var ignoreCaseInitial = false;
   var ignoreCaseAll = false;
   var ignorePunctuation = false;
-  var dictionaryPath;
   var inputWord;
 
   ArgResults results;
@@ -58,12 +57,6 @@ int main(List<String> args) {
       abbr: 'p',
       help: 'Ignore punctuation in words from dictionary',
       negatable: false);
-  argParser.addOption(
-    'dictionary',
-    abbr: 'd',
-    help: 'The path of the dictionary word list',
-    callback: (String? param) => dictionaryPath = param,
-  );
 
   try {
     results = argParser.parse(args);
@@ -116,9 +109,6 @@ int main(List<String> args) {
   anagram.ignoreCaseInitial = ignoreCaseInitial;
   anagram.maxWords = maxWords;
   anagram.ignorePunctuation = ignorePunctuation;
-  if (dictionaryPath != null) {
-    anagram.dictionaryPath = dictionaryPath;
-  }
   anagram.initialise();
 
   // Solve the anagram

@@ -49,8 +49,6 @@ class Anagram {
   Anagram();
 
   static int MaxWords = 64;
-  static String DefaultDictionaryPath = 'default';
-  static String DictionaryPathPart = 'words';
 
   /// Verbose.
   bool verbose = false;
@@ -66,9 +64,6 @@ class Anagram {
 
   /// Ignore punctuation in words from dictionary.
   bool ignorePunctuation = false;
-
-  /// Dictionary path
-  String? dictionaryPath = DefaultDictionaryPath;
 
   late List<String> _dictionaryWordList;
 
@@ -142,20 +137,14 @@ class Anagram {
       print('   Ignore Case All $ignoreCaseAll');
       print('   Maximum words $maxWords');
       print('   Ignore Punctuation $ignorePunctuation');
-      print('   Dictionary Path $dictionaryPath');
       print('');
     }
   }
 
   /// Read the words from the words file
   void _readWordList() {
-    if (dictionaryPath == DefaultDictionaryPath) {
-      dictionaryPath = join(
-          Platform.script.toFilePath(), DictionaryPathPart, DictionaryPathPart);
-    }
-    _log('Real dictionary path is $dictionaryPath');
-    var myFile = File(dictionaryPath!);
-    _dictionaryWordList = myFile.readAsLinesSync();
+    final ls = LineSplitter();
+    _dictionaryWordList = ls.convert(AnagramWords.words);
     _log('${_dictionaryWordList.length} words read');
   }
 

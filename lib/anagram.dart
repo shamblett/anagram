@@ -8,8 +8,7 @@
 library anagram;
 
 import 'dart:collection';
-import 'dart:io';
-
-import 'package:path/path.dart';
+import 'dart:convert';
 
 part 'src/anagram.dart';
+part 'src/words/anagram_words.dart';
