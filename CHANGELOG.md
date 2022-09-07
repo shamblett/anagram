@@ -1,3 +1,6 @@
+#2.1.4
+Issue 2
+
 #2.1.3 
 internalize the word list
 

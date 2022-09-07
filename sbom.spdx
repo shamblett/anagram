@@ -1,0 +1,16 @@
+SPDXVersion: SPDX-2.2DataLicense: CC0-1.0SPDXID: SPDXRef-DOCUMENTDocumentName: anagramDocumentNamespace: https://pub.dev/packages/anagramLicenseListVersion: 3.8Creator: Tool: https://pub.dev/packages/sbomCreated: 2022-09-07T09:33:32Z
+
+PackageName: anagramSPDXID: SPDXRef-Package-anagramPackageVersion: 2.1.4PackageFileName: anagramPackageSupplier: NOASSERTIONPackageOriginator: NOASSERTIONPackageDownloadLocation: https://pub.dev/packages/anagramFilesAnalyzed: truePackageVerificationCode: e26e226f461d43d152ea7b86f8165e561351fb3cPackageHomePage: https://pub.dev/packages/anagramPackageLicenseConcluded: MITPackageLicenseInfoFromFiles: NOASSERTIONPackageLicenseDeclared: NOASSERTIONPackageCopyrightText: NOASSERTIONPackageSummary: <text>A simple standalone commandline anagram solving utility library for Dart.</text>
+
+FileName: /bin/anagram.dartSPDXID: SPDXRef-anagram-0FileType: SOURCEFileChecksum: SHA1: b4a4d87e7ae22d4a2b91a055fa175cad97adbf96LicenseConcluded: NOASSERTIONLicenseInfoInFile: NOASSERTIONFileCopyrightText: NOASSERTION
+
+FileName: /lib/anagram.dartSPDXID: SPDXRef-anagram-1FileType: SOURCEFileChecksum: SHA1: c872de8d653926368ae4273849769dcf2b2198e4LicenseConcluded: NOASSERTIONLicenseInfoInFile: NOASSERTIONFileCopyrightText: NOASSERTION
+
+FileName: /lib/src/anagram.dartSPDXID: SPDXRef-anagram-2FileType: SOURCEFileChecksum: SHA1: efc507cce70fc0f13b71e2d8bec74be17e15c2c6LicenseConcluded: NOASSERTIONLicenseInfoInFile: NOASSERTIONFileCopyrightText: NOASSERTION
+
+FileName: /lib/src/words/anagram_words.dartSPDXID: SPDXRef-anagram-words-3FileType: SOURCEFileChecksum: SHA1: 666d5d9126fb09d99dbc4b9bbb66850546f853b3LicenseConcluded: NOASSERTIONLicenseInfoInFile: NOASSERTIONFileCopyrightText: NOASSERTION
+
+FileName: /pubspec.yamlSPDXID: SPDXRef-pubspec-4FileType: TEXTFileChecksum: SHA1: f1eb121dccb4f73bd1144fd5548ec0fe4bff84b2LicenseConcluded: NOASSERTIONLicenseInfoInFile: NOASSERTIONFileCopyrightText: NOASSERTION
+
+Relationship: SPDXRef-pubspec-4 DEPENDENCY_MANIFEST_OF SPDXRef-Package-anagram
+

@@ -25,7 +25,7 @@ int main(List<String> args) {
   var ignoreCaseInitial = false;
   var ignoreCaseAll = false;
   var ignorePunctuation = false;
-  var inputWord;
+  String inputWord;
 
   ArgResults results;
 
@@ -61,7 +61,7 @@ int main(List<String> args) {
   try {
     results = argParser.parse(args);
   } on FormatException catch (e) {
-    print('${e.message}');
+    print(e.message);
     return -1;
   }
 
@@ -122,7 +122,7 @@ int main(List<String> args) {
     print('');
     print('The anagrams of "${results.rest.join(" ")}" are :-');
     print('');
-    print('${words.join(',')}');
+    print(words.join(','));
   } else {
     print('');
     print('No anagrams found for $inputWord');

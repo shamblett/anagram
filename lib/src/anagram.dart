@@ -48,7 +48,7 @@ class Anagram {
   /// Construction
   Anagram();
 
-  static int MaxWords = 64;
+  static const int maxNumWords = 64;
 
   /// Verbose.
   bool verbose = false;
@@ -82,7 +82,7 @@ class Anagram {
 
   // The cells for the words
   // making up the anagram under construction.
-  final _anagramWord = List<_Cell?>.filled(MaxWords, _Cell());
+  final _anagramWord = List<_Cell?>.filled(maxNumWords, _Cell());
 
   // Highest number of generations possible.
   int _maxGen = 0;
