@@ -1,8 +1,8 @@
-#2.1.4
-Issue 2
+# 3.0.0
+Issue 3 - Dart 3
 
-#2.1.3 
-internalize the word list
+# 2.1.3 
+Internalize the word list
 
 # 2.1.2
 2.1.2 - fix package path

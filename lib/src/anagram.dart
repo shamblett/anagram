@@ -14,7 +14,7 @@ const int maxGen = 10;
 ///	Structure of a cell used to hold a word in the list which has the same
 ///	letters as a word we have already found. Idem is latin for "the same".
 ///
-class _Idem extends LinkedListEntry<_Idem> {
+base class _Idem extends LinkedListEntry<_Idem> {
   String? word; // The word exactly as read from the dict
 
   @override
@@ -25,7 +25,7 @@ class _Idem extends LinkedListEntry<_Idem> {
 ///	Structure of each word read from the dictionary and stored as part
 ///	of a possible anagram.
 ///
-class _Cell extends LinkedListEntry<_Cell> {
+base class _Cell extends LinkedListEntry<_Cell> {
   String? word; // At last! The word itself
   int? wordLen; //length of the word
 
