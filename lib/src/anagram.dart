@@ -5,7 +5,7 @@
  * Copyright :  S.Hamblett
  */
 
-part of anagram;
+part of '../anagram.dart';
 
 /// Maximum nuber of generations possible
 const int maxGen = 10;
