@@ -1,16 +1,16 @@
-SPDXVersion: SPDX-2.2DataLicense: CC0-1.0SPDXID: SPDXRef-DOCUMENTDocumentName: anagramDocumentNamespace: https://pub.dev/packages/anagramLicenseListVersion: 3.8Creator: Tool: https://pub.dev/packages/sbomCreated: 2023-05-13T10:20:04Z
+SPDXVersion: SPDX-2.2DataLicense: CC0-1.0SPDXID: SPDXRef-DOCUMENTDocumentName: anagramDocumentNamespace: https://pub.dev/packages/anagramLicenseListVersion: 3.8Creator: Tool: https://pub.dev/packages/sbomCreated: 2023-12-29T15:00:12Z
 
-PackageName: anagramSPDXID: SPDXRef-Package-anagramPackageVersion: 3.0.0PackageFileName: anagramPackageSupplier: NOASSERTIONPackageOriginator: NOASSERTIONPackageDownloadLocation: https://pub.dev/packages/anagramFilesAnalyzed: truePackageVerificationCode: d26c052d872ead53bd9a21de90ba8e795ad9acebPackageHomePage: https://pub.dev/packages/anagramPackageLicenseConcluded: MITPackageLicenseInfoFromFiles: NOASSERTIONPackageLicenseDeclared: NOASSERTIONPackageCopyrightText: NOASSERTIONPackageSummary: <text>A simple standalone commandline anagram solving utility library for Dart.</text>
+PackageName: anagramSPDXID: SPDXRef-Package-anagramPackageVersion: 3.0.1PackageFileName: anagramPackageSupplier: NOASSERTIONPackageOriginator: NOASSERTIONPackageDownloadLocation: https://pub.dev/packages/anagramFilesAnalyzed: truePackageVerificationCode: a98b2070b7a61fa2112fc1e2ae0165900af49f73PackageHomePage: https://pub.dev/packages/anagramPackageLicenseConcluded: MITPackageLicenseInfoFromFiles: NOASSERTIONPackageLicenseDeclared: NOASSERTIONPackageCopyrightText: NOASSERTIONPackageSummary: <text>A simple standalone commandline anagram solving utility library for Dart.</text>
 
 FileName: /bin/anagram.dartSPDXID: SPDXRef-anagram-0FileType: SOURCEFileChecksum: SHA1: b4a4d87e7ae22d4a2b91a055fa175cad97adbf96LicenseConcluded: NOASSERTIONLicenseInfoInFile: NOASSERTIONFileCopyrightText: NOASSERTION
 
-FileName: /lib/anagram.dartSPDXID: SPDXRef-anagram-1FileType: SOURCEFileChecksum: SHA1: 2339424c0b8b1bf378d7d52cdb7ed1858c9d463aLicenseConcluded: NOASSERTIONLicenseInfoInFile: NOASSERTIONFileCopyrightText: NOASSERTION
+FileName: /lib/anagram.dartSPDXID: SPDXRef-anagram-1FileType: SOURCEFileChecksum: SHA1: 990fc3fe7ca1fbaa56f293cb3e694b7e7aa5054cLicenseConcluded: NOASSERTIONLicenseInfoInFile: NOASSERTIONFileCopyrightText: NOASSERTION
 
-FileName: /lib/src/anagram.dartSPDXID: SPDXRef-anagram-2FileType: SOURCEFileChecksum: SHA1: 33399eded9316e071c6547fe10af1f86b2a1e15cLicenseConcluded: NOASSERTIONLicenseInfoInFile: NOASSERTIONFileCopyrightText: NOASSERTION
+FileName: /lib/src/anagram.dartSPDXID: SPDXRef-anagram-2FileType: SOURCEFileChecksum: SHA1: 7b5e885514bb358fe790725438096c527844aa44LicenseConcluded: NOASSERTIONLicenseInfoInFile: NOASSERTIONFileCopyrightText: NOASSERTION
 
 FileName: /lib/src/words/anagram_words.dartSPDXID: SPDXRef-anagram-words-3FileType: SOURCEFileChecksum: SHA1: 666d5d9126fb09d99dbc4b9bbb66850546f853b3LicenseConcluded: NOASSERTIONLicenseInfoInFile: NOASSERTIONFileCopyrightText: NOASSERTION
 
-FileName: /pubspec.yamlSPDXID: SPDXRef-pubspec-4FileType: TEXTFileChecksum: SHA1: fb6518c42e1324cf5fc9c68023d2443224f217beLicenseConcluded: NOASSERTIONLicenseInfoInFile: NOASSERTIONFileCopyrightText: NOASSERTION
+FileName: /pubspec.yamlSPDXID: SPDXRef-pubspec-4FileType: TEXTFileChecksum: SHA1: dae9808e53bd545ee3e953e80a3f3ac3470fa525LicenseConcluded: NOASSERTIONLicenseInfoInFile: NOASSERTIONFileCopyrightText: NOASSERTION
 
 Relationship: SPDXRef-pubspec-4 DEPENDENCY_MANIFEST_OF SPDXRef-Package-anagram
 
