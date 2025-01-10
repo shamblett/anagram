@@ -5,7 +5,7 @@
  * Copyright :  S.Hamblett
  */
 
-library anagram;
+library;
 
 import 'dart:collection';
 import 'dart:convert';
