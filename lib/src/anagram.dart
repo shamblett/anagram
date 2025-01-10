@@ -373,7 +373,7 @@ class Anagram {
   ///	of the words in anagword[0..gen]. Best done recursively.
   ///
   ///	Select anagram phrases indicated by anagword[0..gen].
-  ///	There are <gen> invocations of this procedure active above us.
+  ///	There are 'gen' invocations of this procedure active above us.
   ///	The words they are contemplating are available through
   ///	idlist[0..gen-1]. Select the parents' words from there followed by
   ///	every combination of the words dangling from anagword[gen..maxgen].
