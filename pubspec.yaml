@@ -1,6 +1,6 @@
 name: anagram
 description: A simple standalone commandline anagram solving utility library for Dart.
-version: 3.0.2
+version: 3.0.3
 homepage: https://github.com/shamblett/anagram
 
 funding:

@@ -5,18 +5,18 @@ DocumentName: anagram
 DocumentNamespace: https://pub.dev/packages/anagram
 LicenseListVersion: 3.8
 Creator: Tool: https://pub.dev/packages/sbom
-Created: 2025-01-10T14:08:34Z
+Created: 2025-05-13T09:26:40Z
 
 
 PackageName: anagram
 SPDXID: SPDXRef-Package-anagram
-PackageVersion: 3.0.2
+PackageVersion: 3.0.3
 PackageFileName: anagram
 PackageSupplier: NOASSERTION
 PackageOriginator: NOASSERTION
 PackageDownloadLocation: https://pub.dev/packages/anagram
 FilesAnalyzed: true
-PackageVerificationCode: 9f4e0ea290c587a92400ad9524ec47607a374bcb
+PackageVerificationCode: 2ccd667e1362bdc44461e318362d901cfa4d21b7
 PackageHomePage: https://pub.dev/packages/anagram
 PackageLicenseConcluded: MIT
 PackageLicenseInfoFromFiles: NOASSERTION
@@ -37,7 +37,7 @@ FileCopyrightText: NOASSERTION
 FileName: lib/anagram.dart
 SPDXID: SPDXRef-anagram-1
 FileType: SOURCE
-FileChecksum: SHA1: 7a595e1a2809b985237cf01d7c5f45ce2903117e
+FileChecksum: SHA1: a2c9be968c0f3959a6cb8bee60da7a1a1f3bd9e8
 LicenseConcluded: NOASSERTION
 LicenseInfoInFile: NOASSERTION
 FileCopyrightText: NOASSERTION
@@ -55,7 +55,7 @@ FileCopyrightText: NOASSERTION
 FileName: lib/src/words/anagram_words.dart
 SPDXID: SPDXRef-anagram-words-3
 FileType: SOURCE
-FileChecksum: SHA1: 666d5d9126fb09d99dbc4b9bbb66850546f853b3
+FileChecksum: SHA1: 665301d65c40ca05ec6ea9e814005465deddd10b
 LicenseConcluded: NOASSERTION
 LicenseInfoInFile: NOASSERTION
 FileCopyrightText: NOASSERTION
@@ -64,7 +64,7 @@ FileCopyrightText: NOASSERTION
 FileName: pubspec.yaml
 SPDXID: SPDXRef-pubspec-4
 FileType: TEXT
-FileChecksum: SHA1: 7468154fd0daaf96095118869cd876c0b3c2932d
+FileChecksum: SHA1: 571eb264e6fabe7d91f03aa3c2f64654c40b6c9e
 LicenseConcluded: NOASSERTION
 LicenseInfoInFile: NOASSERTION
 FileCopyrightText: NOASSERTION

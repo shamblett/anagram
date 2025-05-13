@@ -1,3 +1,6 @@
+# 3.0.3
+- [Issue 8](https://github.com/shamblett/anagram/issues/8)
+
 # 3.0.2
 - [Issue 6](https://github.com/shamblett/anagram/issues/6)
 
