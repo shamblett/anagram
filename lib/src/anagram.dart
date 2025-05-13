@@ -45,10 +45,8 @@ base class _Cell extends LinkedListEntry<_Cell> {
 
 /// The main anagram class
 class Anagram {
-  /// Construction
-  Anagram();
-
   static const int maxNumWords = 64;
+  static const int frequencyMax = 256;
 
   /// Verbose.
   bool verbose = false;
@@ -75,7 +73,7 @@ class Anagram {
 
   // Number of time each character occurs in the key.
   // Must be initialised to 0s.
-  final _freq = List<int>.filled(256, 0);
+  final _freq = List<int>.filled(frequencyMax, 0);
 
   // Number of letters in key.
   int? _nLetters;
@@ -86,6 +84,9 @@ class Anagram {
 
   // Highest number of generations possible.
   int _maxGen = 0;
+
+  /// Construction
+  Anagram();
 
   /// Initialise
   void initialise() {
@@ -205,7 +206,7 @@ class Anagram {
 
       // This word merits further inspection. See if it contains
       //	no more of any letter than the original.
-      var freq = List.from(_freq, growable: false);
+      var freq = List.of(_freq, growable: false);
       reject = false;
       for (var i = 0; i < realWord.length; i++) {
         if (freq[realWord.codeUnitAt(i)] <= 0) {
@@ -250,11 +251,7 @@ class Anagram {
 
       // If [realWord] differs from pure word, store it separately.
       var idem = _Idem();
-      if (realWord == word) {
-        idem.word = cell.word;
-      } else {
-        idem.word = realWord;
-      }
+      idem.word = realWord == word ? cell.word : realWord;
       cell.idem.add(idem);
       head.add(cell);
     }
@@ -267,7 +264,7 @@ class Anagram {
   /// Return the new head of the list.
   LinkedList<_Cell> _sort() {
     var head = LinkedList<_Cell>();
-    var cells = List<_Cell>.from(_wordList.toList());
+    var cells = List<_Cell>.of(_wordList.toList());
     _wordList.clear();
     cells.sort((a, b) => b.wordLen! > a.wordLen! ? -1 : 1);
     cells.forEach(head.addFirst);
@@ -297,7 +294,7 @@ class Anagram {
       if (nextWord) {
         continue;
       }
-      var freq = List<int>.from(_freq);
+      var freq = List<int>.of(_freq);
       //	Now do a more careful counting check.
       //
       var nl = nLeft;
@@ -354,7 +351,7 @@ class Anagram {
   // Do the two words contain the same letters?
   // It must be guaranteed by the caller that they are the same length.
   bool _sameLetters(String word1, String word2) {
-    var slFreq = List<int>.filled(256, 0);
+    var slFreq = List<int>.filled(frequencyMax, 0);
     slFreq.fillRange(0, slFreq.length - 1, 0);
     for (var i = 0; i < word1.length; i++) {
       slFreq[word1.codeUnitAt(i)]++;
