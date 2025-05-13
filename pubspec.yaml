@@ -7,18 +7,19 @@ funding:
  - https://www.darticulate.com/#funding
 
 environment:
- sdk: '>=3.0.0 <4.0.0'
+ sdk: '>=3.7.0 <4.0.0'
 
 dependencies:
  path: '^1.9.1'
  meta: '^1.16.0'
- args: '^2.6.0'
+ args: '^2.7.0'
 
 executables:
  anagram:
 
 dev_dependencies:
   lints: '^5.1.1'
+  dart_code_metrics_presets: '^2.22.0'
 
 
 

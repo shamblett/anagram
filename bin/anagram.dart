@@ -32,31 +32,44 @@ int main(List<String> args) {
   // Initialize the argument parser
   final argParser = ArgParser();
   argParser.addFlag('help', abbr: 'h', negatable: false);
-  argParser.addOption('maxAnagramWords',
-      abbr: 'm',
-      defaultsTo: '1',
-      help: 'Maximum number of words in anagrams', callback: (String? param) {
-    final tmp = int.tryParse(param!);
-    if (tmp != null && tmp >= 1) {
-      maxWords = tmp;
-    } else {
-      print('Error - Invalid number of words value entered, defaulting');
-    }
-  });
-  argParser.addFlag('verbose',
-      abbr: 'v', help: 'Verbose: give running commentary', negatable: false);
-  argParser.addFlag('ignoreCaseInitial',
-      abbr: 'i',
-      help: 'Ignore case of initial letters of words from dictionary',
-      negatable: false);
-  argParser.addFlag('ignoreCaseAll',
-      abbr: 'I',
-      help: 'Ignore case of all letters of words from dictionary',
-      negatable: false);
-  argParser.addFlag('ignorePunctuation',
-      abbr: 'p',
-      help: 'Ignore punctuation in words from dictionary',
-      negatable: false);
+  argParser.addOption(
+    'maxAnagramWords',
+    abbr: 'm',
+    defaultsTo: '1',
+    help: 'Maximum number of words in anagrams',
+    callback: (String? param) {
+      final tmp = int.tryParse(param!);
+      if (tmp != null && tmp >= 1) {
+        maxWords = tmp;
+      } else {
+        print('Error - Invalid number of words value entered, defaulting');
+      }
+    },
+  );
+  argParser.addFlag(
+    'verbose',
+    abbr: 'v',
+    help: 'Verbose: give running commentary',
+    negatable: false,
+  );
+  argParser.addFlag(
+    'ignoreCaseInitial',
+    abbr: 'i',
+    help: 'Ignore case of initial letters of words from dictionary',
+    negatable: false,
+  );
+  argParser.addFlag(
+    'ignoreCaseAll',
+    abbr: 'I',
+    help: 'Ignore case of all letters of words from dictionary',
+    negatable: false,
+  );
+  argParser.addFlag(
+    'ignorePunctuation',
+    abbr: 'p',
+    help: 'Ignore punctuation in words from dictionary',
+    negatable: false,
+  );
 
   try {
     results = argParser.parse(args);
